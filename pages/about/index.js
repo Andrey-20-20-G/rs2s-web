@@ -1,3 +1,9 @@
+import React, {useState} from "react";
+import Avatar from '../../components/Avatar';
+import Circles from '../../components/Circles';
+import {motion} from 'framer-motion';
+import {fadeIn} from '../../variants';
+
 // icons
 import {
   FaHtml5,
@@ -89,7 +95,41 @@ const aboutData = [
 ];
 
 const About = () => {
-  return <div>About</div>;
+  const [index, setIndex] = useState(0);
+  console.log(index);
+  return (
+    <div className='h-full bg-primary/30 py32 text-center xl:text-left'>
+      <Circles />
+      <motion.div 
+        variants={fadeIn('right', 0.2)}
+        initial='hidden'
+        animate='show'
+        exit='hidden'
+        className='hidden xl:flex absolute bottom-0 -left-[370px]'>
+          <Avatar />
+      </motion.div>
+      <div className="container mx-auto h-full flex flex-col items-center xl:flex-row gap-x-6">
+        <div>text</div>
+        <div>
+          <div className="flex gap-x-4 xl:gap-x-8 mx-auto lx:mx-0 mb-4">
+            {aboutData.map((item, itemIndex) => {
+              return (
+                <div
+                  key={itemIndex}
+                  className={`${
+                    index===itemIndex &&
+                    'text-accent after:w-[100%] after:bg-accent after:transition-all after:duration-300'}
+                    cursor-pointer capitalize xl:text-lg relative after:w-8 after:h-[2px] after:bg-white after:absolute after:-bottom-1 after:left-0`}
+                    onClick={() => setIndex(itemIndex)}>
+                      {item.title}
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
 };
 
 export default About;
